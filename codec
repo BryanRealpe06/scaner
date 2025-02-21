@@ -1,0 +1,24 @@
+import socket
+from datetime import datetime
+
+# Solicitar al usuario la IP o dominio a escanear
+objetivo = input("Ingresa la dirección IP o dominio a escanear: ")
+# Solicitar el rango de puertos
+rango_inicio = int(input("Ingresa el puerto inicial: "))
+rango_fin = int(input("Ingresa el puerto final: "))
+
+print(f"\nEscaneando {objetivo} de puerto {rango_inicio} a {rango_fin}...")
+print(f"Hora de inicio: {datetime.now()}")
+print("-" * 50)
+
+# Escanear los puertos en el rango dado
+for puerto in range(rango_inicio, rango_fin + 1):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket.setdefaulttimeout(1)
+    resultado = s.connect_ex((objetivo, puerto))
+    if resultado == 0:
+        print(f"Puerto {puerto} está ABIERTO")
+    s.close()
+
+print("-" * 50)
+print(f"Escaneo completado a las: {datetime.now()}")
